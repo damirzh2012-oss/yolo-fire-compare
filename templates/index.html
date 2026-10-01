@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YOLO Fire Compare</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <main class="grid">
+    <section class="panel" id="panel-upload">
+      <header class="panel-header">Загрузка</header>
+      <div class="panel-body">
+        <div id="dropzone" class="dropzone">
+          <input id="file-input" type="file" accept=".jpg,.jpeg,.png,.mp4,.avi" hidden />
+          <p class="dropzone-title">Перетащите файл сюда</p>
+          <p class="muted">jpg, png, mp4, avi</p>
+          <button type="button" id="btn-browse" class="btn btn-ghost">Выбрать файл</button>
+        </div>
+        <div id="preview-wrap" class="media-wrap hidden">
+          <img id="preview-img" alt="Превью" />
+          <video id="preview-video" controls></video>
+        </div>
+        <p id="file-name" class="muted file-name"></p>
+        <button type="button" id="btn-run" class="btn btn-primary" disabled>Запустить сравнение</button>
+        <p id="status" class="status"></p>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-finetuned">
+      <header class="panel-header">Доработанная модель</header>
+      <div class="panel-body">
+        <div class="media-wrap placeholder" id="ft-media">
+          <p class="muted">Результат custom_model появится здесь</p>
+          <img id="ft-img" alt="Доработанная модель" class="hidden" />
+          <video id="ft-video" controls class="hidden"></video>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-base">
+      <header class="panel-header">Базовая модель</header>
+      <div class="panel-body">
+        <div class="media-wrap placeholder" id="base-media">
+          <p class="muted">Результат yolov8n появится здесь</p>
+          <img id="base-img" alt="Базовая модель" class="hidden" />
+          <video id="base-video" controls class="hidden"></video>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-stats">
+      <header class="panel-header">Статистика</header>
+      <div class="panel-body stats-body">
+        <div class="cards">
+          <article class="card">
+            <h3>Обнаружения</h3>
+            <p><span id="stat-det-base">—</span> <small>база</small></p>
+            <p><span id="stat-det-ft">—</span> <small>доработанная</small></p>
+          </article>
+          <article class="card">
+            <h3>Средний confidence</h3>
+            <p><span id="stat-conf-base">—</span></p>
+            <p><span id="stat-conf-ft">—</span></p>
+          </article>
+          <article class="card">
+            <h3>Ложные срабатывания</h3>
+            <p><span id="stat-fp-base">—</span></p>
+            <p><span id="stat-fp-ft">—</span></p>
+          </article>
+          <article class="card">
+            <h3>Время обработки</h3>
+            <p><span id="stat-t-base">—</span></p>
+            <p><span id="stat-t-ft">—</span></p>
+          </article>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="chart"></canvas>
+        </div>
+        <p id="verdict" class="verdict">Прирост точности: —</p>
+      </div>
+    </section>
+  </main>
+  <div id="overlay" class="overlay hidden">
+    <div class="spinner"></div>
+    <p>Инференс обеих моделей…</p>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
